@@ -1,0 +1,22 @@
+---
+import '../styles/global.css';
+import { profile } from '../content/profile';
+
+const title = `${profile.name} · ${profile.title}`;
+// No favicon yet: the empty data URL stops the browser requesting /favicon.ico (a 404).
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={profile.headline} />
+    <meta name="color-scheme" content="dark" />
+    <link rel="icon" href="data:," />
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>

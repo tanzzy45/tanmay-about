@@ -1,0 +1,12 @@
+---
+// Visible marker for a value the owner still has to supply in profile.ts.
+interface Props {
+  what?: string;
+}
+
+const { what } = Astro.props;
+---
+
+<span class="rounded border border-dashed border-zinc-600 px-1.5 py-0.5 font-mono text-xs text-zinc-400">
+  {what ? `TODO: ${what}` : 'TODO'}
+</span>

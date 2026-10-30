@@ -1,0 +1,16 @@
+---
+interface Props {
+  items: string[];
+  label: string;
+}
+
+const { items, label } = Astro.props;
+---
+
+<ul aria-label={label} class="flex flex-wrap gap-1.5">
+  {
+    items.map((item) => (
+      <li class="rounded border border-zinc-700 px-2 py-0.5 font-mono text-xs text-zinc-200">{item}</li>
+    ))
+  }
+</ul>
