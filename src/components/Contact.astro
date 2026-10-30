@@ -1,0 +1,20 @@
+---
+import { profile } from '../content/profile';
+import MaybeLink from './MaybeLink.astro';
+import Section from './Section.astro';
+---
+
+<Section id="contact" title="Contact">
+  <dl class="grid gap-4">
+    {
+      profile.contact.map((channel) => (
+        <div class="grid gap-1 sm:grid-cols-[8rem_1fr] sm:gap-6">
+          <dt class="text-sm text-zinc-400">{channel.label}</dt>
+          <dd class="break-words">
+            <MaybeLink link={{ label: channel.display ?? channel.label, href: channel.href }} />
+          </dd>
+        </div>
+      ))
+    }
+  </dl>
+</Section>

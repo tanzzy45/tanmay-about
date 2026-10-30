@@ -1,0 +1,22 @@
+---
+import AiAgents from '../components/AiAgents.astro';
+import BuildLog from '../components/BuildLog.astro';
+import Contact from '../components/Contact.astro';
+import Hero from '../components/Hero.astro';
+import Nav from '../components/Nav.astro';
+import Shipped from '../components/Shipped.astro';
+import Stack from '../components/Stack.astro';
+import Base from '../layouts/Base.astro';
+---
+
+<Base>
+  <Nav />
+  <main class="mx-auto max-w-3xl px-5 pb-24">
+    <Hero />
+    <Shipped />
+    <Stack />
+    <AiAgents />
+    <BuildLog />
+    <Contact />
+  </main>
+</Base>

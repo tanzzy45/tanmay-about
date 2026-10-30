@@ -1,0 +1,11 @@
+---
+import { profile } from '../content/profile';
+import ProjectCard from './ProjectCard.astro';
+import Section from './Section.astro';
+---
+
+<Section id="shipped" title="Shipped">
+  <div class="grid gap-6">
+    {profile.projects.map((project) => <ProjectCard project={project} />)}
+  </div>
+</Section>

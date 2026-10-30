@@ -1,0 +1,30 @@
+---
+import type { Link } from '../content/profile';
+import Todo from './Todo.astro';
+
+// Renders a link, or a non-clickable TODO marker when the URL isn't supplied yet.
+interface Props {
+  link: Link;
+  class?: string;
+  todoClass?: string;
+}
+
+const {
+  link,
+  class: className = 'text-zinc-50 underline decoration-zinc-600 underline-offset-4 hover:decoration-emerald-400',
+  todoClass = 'text-zinc-400',
+} = Astro.props;
+const external = link.href?.startsWith('http') ?? false;
+---
+
+{
+  link.href ? (
+    <a href={link.href} class={className} rel={external ? 'noopener noreferrer' : undefined}>
+      {link.label}
+    </a>
+  ) : (
+    <span class:list={['inline-flex items-center gap-2', todoClass]}>
+      {link.label} <Todo what="URL" />
+    </span>
+  )
+}
