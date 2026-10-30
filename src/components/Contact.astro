@@ -2,6 +2,7 @@
 import { profile } from '../content/profile';
 import MaybeLink from './MaybeLink.astro';
 import Section from './Section.astro';
+import Todo from './Todo.astro';
 ---
 
 <Section id="contact" title="Contact">
@@ -11,7 +12,11 @@ import Section from './Section.astro';
         <div class="grid gap-1 sm:grid-cols-[8rem_1fr] sm:gap-6">
           <dt class="text-sm text-zinc-400">{channel.label}</dt>
           <dd class="break-words">
-            <MaybeLink link={{ label: channel.display ?? channel.label, href: channel.href }} />
+            {channel.href && channel.display ? (
+              <MaybeLink link={{ label: channel.display, href: channel.href }} />
+            ) : (
+              <Todo what="URL" />
+            )}
           </dd>
         </div>
       ))
