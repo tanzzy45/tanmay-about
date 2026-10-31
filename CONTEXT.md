@@ -6,8 +6,8 @@ A one-page personal site for Tanmay Surve, built as a job application to Fredrin
 the code and the PRs, not just the page.
 
 ## Stack
-- Astro (latest) + TypeScript strict + Tailwind CSS. No React/Vue unless a ticket asks.
-- Node 20+, npm. Tests with vitest.
+- Astro 7.3.x (7.4 needs Node 22.22+, this machine runs 22.18) + TypeScript strict + Tailwind CSS. No React/Vue unless a ticket asks.
+- Node 22.12+, npm. Tests with vitest.
 - Static output, hosted on Cloudflare Pages, deployed from main.
 
 ## Layout
