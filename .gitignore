@@ -1,6 +1,7 @@
 # build output
 dist/
 .astro/
+.lighthouseci/
 
 # dependencies
 node_modules/
