@@ -2,7 +2,14 @@
 import '../styles/global.css';
 import { profile } from '../content/profile';
 
-const title = `${profile.name} · ${profile.title}`;
+interface Props {
+  /** Page name, shown before the site name in the tab title. Omit on the home page. */
+  title?: string;
+}
+
+const title = Astro.props.title
+  ? `${Astro.props.title} · ${profile.name}`
+  : `${profile.name} · ${profile.title}`;
 // No favicon yet: the empty data URL stops the browser requesting /favicon.ico (a 404).
 ---
 
