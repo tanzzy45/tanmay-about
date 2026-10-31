@@ -20,10 +20,10 @@ const ci: Record<CiResult, { label: string; class: string }> = {
 const stats = log.ok
   ? [
       { label: 'PRs merged', value: String(log.stats.merged) },
-      { label: 'Most open at once', value: String(log.stats.mostOpenAtOnce) },
+      { label: 'Agents working at once', value: String(log.stats.agentsWorkingAtOnce) },
       {
-        label: 'First commit to live',
-        value: log.stats.firstCommitToLiveMs === null ? '–' : formatDuration(log.stats.firstCommitToLiveMs),
+        label: 'Agent time',
+        value: log.stats.agentTimeMs === null ? '–' : formatDuration(log.stats.agentTimeMs),
       },
     ]
   : [];

@@ -59,12 +59,16 @@ const routes: Record<string, Route> = {
   [`${REPO}/commits/sha1/status`]: noStatuses,
   [`${REPO}/commits/sha3/check-runs?per_page=100`]: noChecks,
   [`${REPO}/commits/sha3/status`]: { body: { state: 'failure', total_count: 1 } },
-  [`${REPO}/commits?per_page=1`]: {
-    body: [{ commit: { author: { date: '2026-10-30T12:00:00Z' }, committer: null } }],
-    link: `<${API}/repositories/1/commits?per_page=1&page=9>; rel="last"`,
+  // Out of date order, as after a rebase: the earliest author date is the first commit.
+  [`${REPO}/pulls/1/commits?per_page=100`]: {
+    body: [
+      { commit: { author: { date: '2026-10-30T09:40:00Z' }, committer: { date: '2026-10-30T10:05:00Z' } } },
+      { commit: { author: { date: '2026-10-30T09:15:00Z' }, committer: { date: '2026-10-30T10:05:00Z' } } },
+    ],
   },
-  [`${API}/repositories/1/commits?per_page=1&page=9`]: {
-    body: [{ commit: { author: { date: '2026-10-30T09:00:00Z' }, committer: null } }],
+  // No author date, so the committer date is used.
+  [`${REPO}/pulls/3/commits?per_page=100`]: {
+    body: [{ commit: { author: null, committer: { date: '2026-10-30T09:45:00Z' } } }],
   },
 };
 
@@ -93,13 +97,20 @@ describe('loadBuildLog', () => {
         additions: 10,
         deletions: 1,
         ci: 'passed',
+        firstCommitAt: '2026-10-30T09:15:00Z',
         openedAt: '2026-10-30T10:00:00Z',
         mergedAt: '2026-10-30T11:00:00Z',
       },
-      expect.objectContaining({ number: 3, branch: 'branch-3', ci: 'failed', mergedAt: '2026-10-30T12:00:00Z' }),
+      expect.objectContaining({
+        number: 3,
+        branch: 'branch-3',
+        ci: 'failed',
+        firstCommitAt: '2026-10-30T09:45:00Z',
+        mergedAt: '2026-10-30T12:00:00Z',
+      }),
     ]);
-    // First commit 09:00 (the last page of commits) to the last merge at 12:00.
-    expect(log.stats).toEqual({ merged: 2, mostOpenAtOnce: 2, firstCommitToLiveMs: 3 * 3_600_000 });
+    // #1 was worked on 09:15–11:00 and #3 09:45–12:00: they overlap, and together cover 09:15–12:00.
+    expect(log.stats).toEqual({ merged: 2, agentsWorkingAtOnce: 2, agentTimeMs: 2.75 * 3_600_000 });
   });
 
   it('sends the token only when one is set', async () => {
