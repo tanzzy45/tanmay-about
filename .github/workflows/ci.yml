@@ -1,0 +1,103 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+# A new push to a PR cancels its older run. Runs on main queue instead, so every merge deploys.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+permissions:
+  contents: read
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    # Read-only, for the build-time GitHub API fetch behind #build-log (src/lib/github.ts).
+    permissions:
+      contents: read
+      pull-requests: read
+      checks: read
+      statuses: read
+      actions: read
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      - run: npm run check
+
+      - run: npm test
+
+      # On main this build is what gets deployed, so every merge also refreshes #build-log.
+      - run: npm run build
+        env:
+          GITHUB_REPO: ${{ github.repository }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      # Both tools are pinned here rather than in package.json: they only run in CI, and their
+      # dependency trees would add audit warnings to a site that ships none of them.
+      - name: Check for broken links
+        run: npx --yes linkinator@8.1.0 dist
+
+      - name: Lighthouse CI (95+ in every category)
+        run: npx --yes @lhci/cli@0.15.1 autorun
+
+      - name: Upload Lighthouse reports
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@v7
+        with:
+          name: lighthouse-reports
+          path: .lighthouseci/
+          if-no-files-found: ignore
+          retention-days: 14
+
+      # The deploy job ships exactly this build, so what goes live is what passed the checks.
+      - name: Upload site
+        uses: actions/upload-artifact@v7
+        with:
+          name: dist
+          path: dist/
+          retention-days: 7
+
+  deploy:
+    needs: ci
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    environment:
+      name: production
+      url: ${{ steps.deploy.outputs.deployment-url }}
+    steps:
+      - name: Check Cloudflare secrets
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: |
+          if [ -z "$CLOUDFLARE_API_TOKEN" ] || [ -z "$CLOUDFLARE_ACCOUNT_ID" ]; then
+            echo "::error::Add the CLOUDFLARE_API_TOKEN and CLOUDFLARE_ACCOUNT_ID repository secrets to deploy."
+            exit 1
+          fi
+
+      - uses: actions/download-artifact@v8
+        with:
+          name: dist
+          path: dist
+
+      - name: Deploy to Cloudflare Pages
+        id: deploy
+        uses: cloudflare/wrangler-action@v4
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          wranglerVersion: '4.156.0'
+          command: pages deploy dist --project-name=tanmay-about --branch=main --commit-hash=${{ github.sha }}

@@ -1,0 +1,11 @@
+{
+  "recurse": true,
+  "checkFragments": true,
+  "checkCss": true,
+  "retry": true,
+  "retryErrors": true,
+  "retryErrorsCount": 3,
+  "retryErrorsJitter": 3000,
+  "timeout": 60000,
+  "verbosity": "error"
+}
