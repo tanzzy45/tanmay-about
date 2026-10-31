@@ -7,47 +7,48 @@ import MaybeLink from './MaybeLink.astro';
 const button = 'inline-flex items-center rounded-md px-4 py-2 text-sm font-medium';
 ---
 
-<section
-  id="hero"
-  aria-labelledby="hero-title"
-  class="flex flex-col gap-8 pt-16 pb-14 sm:flex-row sm:items-start sm:gap-10 sm:pt-24 sm:pb-16"
->
-  {/* 160px wide on mobile, 200px from `sm` up. `priority` loads it eagerly: it is above the fold. */}
-  <Image
-    src={photo}
-    alt={profile.name}
-    format="webp"
-    width={200}
-    height={256}
-    widths={[160, 200, 320, 400]}
-    sizes="(min-width: 640px) 200px, 160px"
-    priority
-    class="h-auto w-40 shrink-0 rounded-lg border border-zinc-800 bg-zinc-900 sm:w-50"
-  />
-  <div>
-    <h1 id="hero-title" class="text-4xl font-semibold tracking-tight text-zinc-50 sm:text-5xl">
-      {profile.name}
-    </h1>
-    <p class="mt-3 text-lg text-zinc-400">{profile.title}</p>
-    <p class="mt-6 max-w-2xl text-lg leading-relaxed text-zinc-300 sm:text-xl">{profile.headline}</p>
-    <p class="mt-4 text-zinc-300">{profile.intro}</p>
-    <p class="mt-4 text-sm text-zinc-400">{profile.details.join(' · ')}</p>
-    <ul class="mt-8 flex flex-wrap gap-3">
-      {
-        profile.contact.map((channel, i) => (
-          <li>
-            <MaybeLink
-              link={channel}
-              class={
-                i === 0
-                  ? `${button} bg-emerald-400 text-zinc-950 hover:bg-emerald-300`
-                  : `${button} border border-zinc-700 text-zinc-50 hover:border-zinc-500`
-              }
-              todoClass={`${button} border border-dashed border-zinc-700 text-zinc-400`}
-            />
-          </li>
-        ))
-      }
-    </ul>
+<section id="hero" aria-labelledby="hero-title" class="pt-14 pb-14 sm:pt-20 sm:pb-16">
+  {/* Photo above the name on mobile, to its left from `sm` up. */}
+  <div class="flex flex-col gap-6 sm:flex-row sm:items-end sm:gap-8">
+    {/* 128px wide on mobile, 160px from `sm` up. `priority` loads it eagerly: it is above the fold. */}
+    <Image
+      src={photo}
+      alt={profile.name}
+      format="webp"
+      width={200}
+      height={256}
+      widths={[128, 160, 256, 320]}
+      sizes="(min-width: 640px) 160px, 128px"
+      priority
+      class="h-auto w-32 shrink-0 rounded-lg border border-stone-800 bg-stone-900 sm:w-40"
+    />
+    <div>
+      <h1 id="hero-title" class="text-5xl leading-none text-stone-50 sm:text-7xl">
+        {profile.name}
+      </h1>
+      <p class="mt-3 text-lg text-stone-300">{profile.title}</p>
+      <p class="mt-1 text-sm text-stone-400">{profile.details.join(' · ')}</p>
+    </div>
   </div>
+  <p class="mt-10 max-w-2xl text-xl leading-relaxed text-stone-200 sm:text-2xl sm:leading-relaxed">
+    {profile.headline}
+  </p>
+  <p class="mt-4 text-stone-300">{profile.intro}</p>
+  <ul class="mt-8 flex flex-wrap gap-3">
+    {
+      profile.contact.map((channel, i) => (
+        <li>
+          <MaybeLink
+            link={channel}
+            class={
+              i === 0
+                ? `${button} bg-accent text-stone-950 hover:bg-accent-hover`
+                : `${button} border border-stone-700 text-stone-50 hover:border-stone-500`
+            }
+            todoClass={`${button} border border-dashed border-stone-700 text-stone-400`}
+          />
+        </li>
+      ))
+    }
+  </ul>
 </section>

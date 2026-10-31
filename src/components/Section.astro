@@ -7,7 +7,7 @@ interface Props {
 const { id, title } = Astro.props;
 ---
 
-<section id={id} aria-labelledby={`${id}-title`} class="border-t border-zinc-800 py-14 sm:py-16">
-  <h2 id={`${id}-title`} class="text-2xl font-semibold tracking-tight text-zinc-50">{title}</h2>
+<section id={id} aria-labelledby={`${id}-title`} class="border-t border-stone-800 py-14 sm:py-16">
+  <h2 id={`${id}-title`} class="text-3xl text-stone-50 sm:text-4xl">{title}</h2>
   {Astro.slots.has('default') && <div class="mt-8"><slot /></div>}
 </section>

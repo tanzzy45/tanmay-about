@@ -8,16 +8,19 @@ const links = [
   { href: '#build-log', label: 'Build log' },
   { href: '#contact', label: 'Contact' },
 ];
+
+// No underline until hover, then one in the accent, like the page's other text links.
+const hover = 'decoration-accent underline-offset-4 hover:underline';
 ---
 
-<header class="sticky top-0 z-10 border-b border-zinc-800 bg-zinc-950/90 backdrop-blur">
+<header class="sticky top-0 z-10 border-b border-stone-800 bg-stone-950">
   <nav aria-label="Sections" class="mx-auto flex h-14 max-w-3xl items-center gap-6 px-5">
-    <a href="#hero" class="hidden shrink-0 font-semibold text-zinc-50 sm:block">{profile.name}</a>
-    <ul class="flex min-w-0 gap-3 overflow-x-auto text-sm sm:ml-auto sm:gap-5">
+    <a href="#hero" class={`hidden shrink-0 font-serif text-xl text-stone-50 sm:block ${hover}`}>{profile.name}</a>
+    <ul class="flex min-w-0 gap-3 overflow-x-auto py-1 text-sm sm:ml-auto sm:gap-5">
       {
         links.map((link) => (
           <li class="shrink-0">
-            <a href={link.href} class="text-zinc-300 hover:text-zinc-50">
+            <a href={link.href} class={`text-stone-300 hover:text-stone-50 ${hover}`}>
               {link.label}
             </a>
           </li>

@@ -11,8 +11,8 @@ interface Props {
 
 const {
   link,
-  class: className = 'text-zinc-50 underline decoration-zinc-600 underline-offset-4 hover:decoration-emerald-400',
-  todoClass = 'text-zinc-400',
+  class: className = 'text-stone-50 underline decoration-stone-600 underline-offset-4 hover:decoration-accent',
+  todoClass = 'text-stone-400',
 } = Astro.props;
 const external = link.href?.startsWith('http') ?? false;
 ---

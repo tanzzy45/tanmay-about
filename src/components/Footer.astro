@@ -1,0 +1,18 @@
+---
+// The date `astro build` ran. CI builds what gets deployed, so it is the deploy date.
+// Read in Mumbai time, so a CI runner on UTC still prints the owner's calendar date.
+const parts = new Intl.DateTimeFormat('en-US', {
+  timeZone: 'Asia/Kolkata',
+  year: 'numeric',
+  month: '2-digit',
+  day: '2-digit',
+}).formatToParts(new Date());
+const part = (type: Intl.DateTimeFormatPartTypes) => parts.find((p) => p.type === type)?.value;
+const buildDate = `${part('year')}-${part('month')}-${part('day')}`;
+---
+
+<footer class="border-t border-stone-800">
+  <p class="mx-auto max-w-3xl px-5 py-8 text-sm text-stone-400">
+    Built in Mumbai with Fredrin · Last deployed <time datetime={buildDate} class="font-mono">{buildDate}</time>
+  </p>
+</footer>

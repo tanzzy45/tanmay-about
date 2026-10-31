@@ -10,7 +10,7 @@ import Todo from './Todo.astro';
     {
       profile.contact.map((channel) => (
         <div class="grid gap-1 sm:grid-cols-[8rem_1fr] sm:gap-6">
-          <dt class="text-sm text-zinc-400">{channel.label}</dt>
+          <dt class="text-sm text-stone-400">{channel.label}</dt>
           <dd class="break-words">
             {channel.href && channel.display ? (
               <MaybeLink link={{ label: channel.display, href: channel.href }} />
