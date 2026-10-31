@@ -61,7 +61,7 @@ export const profile: Profile = {
   title: 'Full-stack engineer & founder',
   headline:
     "I've shipped a marketplace to production and sold it to 500+ brands myself. I build full-stack apps, computer vision pipelines and AI agents.",
-  intro: 'Dreamer, Fluent in Python, sarcasm and Stack Overflow',
+  intro: 'Dreamer. Fluent in Python, sarcasm and Stack Overflow.',
   details: ['Mumbai, India', 'Fully remote', 'Happy to work US hours'],
 
   // Hero buttons and the Contact section both read this list. No phone number.
@@ -179,11 +179,9 @@ export const profile: Profile = {
 
   aiAgents: {
     bullets: [
-      'Break work into small, atomic tickets with clear input/output boundaries to keep context windows clean.',
-      'Run parallel agent streams in isolated Git worktrees to prevent branch and lockfile collisions.',
-      'Require passing test suites before letting agents auto-commit or merge Pull Requests.',
-      'Review generated PR diffs line-by-line instead of assuming a passing build implies perfect business logic.',
-      'Log agent failure modes and edge cases in real time to continuously refine future prompts.',
+      "I write the Project Context before the first ticket, and fix it when a worker shows me it's wrong.",
+      'I split tickets so parallel workers touch different files. Three ran at once on this page with no merge conflicts.',
+      'When a number I asked for turned out wrong, I fixed the spec, not just the output (PR #5).',
     ],
     links: [
       { label: 'See the PRs that built this page', href: '#build-log' },
