@@ -21,3 +21,67 @@
     @apply rounded-sm outline-2 outline-offset-2 outline-emerald-400;
   }
 }
+
+@layer components {
+  /* Rendered Markdown (content/field-report.md). Mirrors Section, cards and links. */
+  .markdown > * + * {
+    @apply mt-5;
+  }
+
+  .markdown h2 {
+    @apply mt-14 border-t border-zinc-800 pt-14 text-2xl font-semibold tracking-tight text-zinc-50;
+  }
+
+  .markdown h3 {
+    @apply mt-10 text-lg font-semibold text-zinc-50;
+  }
+
+  .markdown h4 {
+    @apply mt-8 font-semibold text-zinc-50;
+  }
+
+  .markdown p,
+  .markdown li {
+    @apply leading-relaxed;
+  }
+
+  .markdown ul {
+    @apply list-disc space-y-2 pl-5 marker:text-zinc-600;
+  }
+
+  .markdown ol {
+    @apply list-decimal space-y-2 pl-5 marker:text-zinc-500;
+  }
+
+  .markdown a {
+    @apply text-zinc-50 underline decoration-zinc-600 underline-offset-4 hover:decoration-emerald-400;
+  }
+
+  .markdown strong {
+    @apply font-semibold text-zinc-50;
+  }
+
+  .markdown code {
+    @apply rounded border border-zinc-800 bg-zinc-900 px-1 py-0.5 font-mono text-sm text-zinc-200;
+  }
+
+  .markdown pre {
+    @apply overflow-x-auto rounded-lg border border-zinc-800 bg-zinc-900 p-4 text-sm;
+  }
+
+  .markdown pre code {
+    @apply border-0 bg-transparent p-0;
+  }
+
+  .markdown blockquote {
+    @apply border-l-2 border-zinc-700 pl-4 text-zinc-400;
+  }
+
+  .markdown hr {
+    @apply border-zinc-800;
+  }
+
+  .markdown img {
+    @apply rounded-lg border border-zinc-800;
+  }
+}
