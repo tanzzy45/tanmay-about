@@ -8,13 +8,13 @@ import Section from './Section.astro';
 // Keep the section id, AiAgents links to #build-log.
 const log = await loadBuildLog();
 
-const linkClass = 'text-zinc-50 underline decoration-zinc-600 underline-offset-4 hover:decoration-emerald-400';
+const linkClass = 'text-stone-50 underline decoration-stone-600 underline-offset-4 hover:decoration-accent';
 
 const ci: Record<CiResult, { label: string; class: string }> = {
-  passed: { label: 'CI passed', class: 'border-emerald-400/40 text-emerald-400' },
+  passed: { label: 'CI passed', class: 'border-stone-500 text-stone-100' },
   failed: { label: 'CI failed', class: 'border-red-400/40 text-red-300' },
-  pending: { label: 'CI pending', class: 'border-zinc-600 text-zinc-300' },
-  none: { label: 'No CI', class: 'border-dashed border-zinc-600 text-zinc-400' },
+  pending: { label: 'CI pending', class: 'border-stone-600 text-stone-300' },
+  none: { label: 'No CI', class: 'border-dashed border-stone-600 text-stone-400' },
 };
 
 const stats = log.ok
@@ -48,9 +48,9 @@ const count = (n: number) => n.toLocaleString('en-US');
 
         <dl class="mt-6 grid grid-cols-3 gap-3">
           {stats.map((stat) => (
-            <div class="flex flex-col justify-between gap-2 rounded-lg border border-zinc-800 bg-zinc-900 p-3 sm:p-4">
-              <dt class="text-xs text-zinc-400 sm:text-sm">{stat.label}</dt>
-              <dd class="font-mono text-xl font-semibold text-zinc-50 sm:text-2xl">{stat.value}</dd>
+            <div class="flex flex-col justify-between gap-2 rounded-lg border border-stone-800 bg-stone-900 p-3 sm:p-4">
+              <dt class="text-xs text-stone-400 sm:text-sm">{stat.label}</dt>
+              <dd class="font-mono text-xl font-medium text-stone-50 sm:text-2xl">{stat.value}</dd>
             </div>
           ))}
         </dl>
@@ -58,9 +58,9 @@ const count = (n: number) => n.toLocaleString('en-US');
         {log.prs.length > 0 ? (
           <ol class="mt-6 grid gap-4 sm:grid-cols-2">
             {log.prs.map((pr) => (
-              <li class="flex flex-col rounded-lg border border-zinc-800 bg-zinc-900 p-5">
+              <li class="flex flex-col rounded-lg border border-stone-800 bg-stone-900 p-5">
                 <div class="flex items-center justify-between gap-3">
-                  <span class="font-mono text-xs text-zinc-400">PR #{pr.number}</span>
+                  <span class="font-mono text-xs text-stone-400">PR #{pr.number}</span>
                   <span class:list={['rounded border px-2 py-0.5 font-mono text-xs', ci[pr.ci].class]}>
                     {ci[pr.ci].label}
                   </span>
@@ -70,24 +70,24 @@ const count = (n: number) => n.toLocaleString('en-US');
                     {pr.title}
                   </a>
                 </h3>
-                <p class="mt-2 break-all font-mono text-xs text-zinc-400">
+                <p class="mt-2 break-all font-mono text-xs text-stone-400">
                   <span class="sr-only">Branch: </span>
                   {pr.branch}
                 </p>
                 <dl class="mt-auto grid grid-cols-3 gap-3 pt-5">
                   <div>
-                    <dt class="text-xs text-zinc-400">Files</dt>
-                    <dd class="mt-0.5 font-mono text-sm text-zinc-200">{count(pr.filesChanged)}</dd>
+                    <dt class="text-xs text-stone-400">Files</dt>
+                    <dd class="mt-0.5 font-mono text-sm text-stone-200">{count(pr.filesChanged)}</dd>
                   </div>
                   <div>
-                    <dt class="text-xs text-zinc-400">Lines</dt>
-                    <dd class="mt-0.5 font-mono text-sm text-zinc-200">
+                    <dt class="text-xs text-stone-400">Lines</dt>
+                    <dd class="mt-0.5 font-mono text-sm text-stone-200">
                       +{count(pr.additions)} −{count(pr.deletions)}
                     </dd>
                   </div>
                   <div>
-                    <dt class="text-xs text-zinc-400">Open to merge</dt>
-                    <dd class="mt-0.5 font-mono text-sm text-zinc-200">
+                    <dt class="text-xs text-stone-400">Open to merge</dt>
+                    <dd class="mt-0.5 font-mono text-sm text-stone-200">
                       {formatDuration(Date.parse(pr.mergedAt) - Date.parse(pr.openedAt))}
                     </dd>
                   </div>

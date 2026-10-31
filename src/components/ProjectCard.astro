@@ -16,12 +16,12 @@ const { image } = project;
 const imageExists = image ? existsSync(join(process.cwd(), 'public', image.src)) : false;
 ---
 
-<article class="rounded-lg border border-zinc-800 bg-zinc-900 p-5 sm:p-6">
+<article class="rounded-lg border border-stone-800 bg-stone-900 p-5 sm:p-6">
   <div class="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
-    <h3 class="text-lg font-semibold text-zinc-50">{project.name}</h3>
-    {project.note && <p class="font-mono text-xs text-zinc-400">{project.note}</p>}
+    <h3 class="text-lg font-semibold text-stone-50">{project.name}</h3>
+    {project.note && <p class="font-mono text-xs text-stone-400">{project.note}</p>}
   </div>
-  <p class="mt-1 text-sm text-zinc-400">{project.role ?? <Todo what="role" />}</p>
+  <p class="mt-1 text-sm text-stone-400">{project.role ?? <Todo what="role" />}</p>
   {
     image &&
       (imageExists ? (
@@ -32,10 +32,10 @@ const imageExists = image ? existsSync(join(process.cwd(), 'public', image.src))
           height={image.height}
           loading="lazy"
           decoding="async"
-          class="mt-5 h-auto w-full rounded border border-zinc-800 bg-zinc-950"
+          class="mt-5 h-auto w-full rounded border border-stone-800 bg-stone-950"
         />
       ) : (
-        <div class="mt-5 flex aspect-video items-center justify-center rounded border border-dashed border-zinc-700 p-4">
+        <div class="mt-5 flex aspect-video items-center justify-center rounded border border-dashed border-stone-700 p-4">
           <Todo what={`add public${image.src}`} />
         </div>
       ))

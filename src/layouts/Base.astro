@@ -1,5 +1,16 @@
 ---
+// Self-hosted fonts, latin subset only (the page is in English). Vite bundles the files
+// into dist/_astro, so no font request leaves the site.
+import '@fontsource/instrument-serif/latin-400.css';
+import '@fontsource/ibm-plex-sans/latin-400.css';
+import '@fontsource/ibm-plex-sans/latin-500.css';
+import '@fontsource/ibm-plex-sans/latin-600.css';
+import '@fontsource/ibm-plex-mono/latin-400.css';
+import '@fontsource/ibm-plex-mono/latin-500.css';
+// The hero's font (the name), preloaded. Same file the CSS above points at.
+import heroFont from '@fontsource/instrument-serif/files/instrument-serif-latin-400-normal.woff2?url';
 import '../styles/global.css';
+import Footer from '../components/Footer.astro';
 import { profile } from '../content/profile';
 
 interface Props {
@@ -10,7 +21,6 @@ interface Props {
 const title = Astro.props.title
   ? `${Astro.props.title} · ${profile.name}`
   : `${profile.name} · ${profile.title}`;
-// No favicon yet: the empty data URL stops the browser requesting /favicon.ico (a 404).
 ---
 
 <!doctype html>
@@ -21,9 +31,11 @@ const title = Astro.props.title
     <title>{title}</title>
     <meta name="description" content={profile.headline} />
     <meta name="color-scheme" content="dark" />
-    <link rel="icon" href="data:," />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="preload" href={heroFont} as="font" type="font/woff2" crossorigin />
   </head>
   <body>
     <slot />
+    <Footer />
   </body>
 </html>
