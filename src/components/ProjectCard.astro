@@ -28,9 +28,11 @@ const imageExists = image ? existsSync(join(process.cwd(), 'public', image.src))
         <img
           src={image.src}
           alt={image.alt}
+          width={image.width}
+          height={image.height}
           loading="lazy"
           decoding="async"
-          class="mt-5 aspect-video w-full rounded border border-zinc-800 bg-zinc-950 object-contain"
+          class="mt-5 h-auto w-full rounded border border-zinc-800 bg-zinc-950"
         />
       ) : (
         <div class="mt-5 flex aspect-video items-center justify-center rounded border border-dashed border-zinc-700 p-4">
