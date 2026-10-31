@@ -1,29 +1,35 @@
 import type { MergedPr } from '../../src/lib/github';
 
-export const firstCommitAt = '2026-10-30T09:00:00Z';
-
 /**
- * Five merged PRs, in merge order:
+ * Two work sessions, in merge order. Times are UTC.
  *
- *   09:00  first commit
- *   #1     09:30 ── 10:00
- *   #2              10:00 ─────────── 12:00
- *   #3                 10:15 ── 11:00
- *   #4                    10:30 ──────────── 13:30
- *   #5                                  12:30 ──────── 14:45
+ *            first commit   opened   merged
+ *   #1   30 Oct   14:24     14:30    14:34
+ *        (no work overnight)
+ *   #2   31 Oct   06:18     06:24    06:26
+ *   #3   31 Oct   06:22     06:27    06:32
+ *   #4   31 Oct   06:25     06:33    06:43
  *
- * #2, #3 and #4 are all open from 10:30 to 11:00, so the most open at once is 3.
- * #2 opens the moment #1 merges, which doesn't count as overlapping.
+ * #2, #3 and #4 were all being worked on from 06:25 to 06:26, but each one opened after
+ * the one before it merged, so no two of them were ever open at once.
+ * Agent time is 14:24–14:34 (10m) plus 06:18–06:43 (25m): 35m.
  */
 export const mergedPrs: MergedPr[] = [
-  pr(1, 'feat: build the About Me page', '09:30', '10:00'),
-  pr(2, 'feat: render the build log', '10:00', '12:00'),
-  pr(3, 'fix: nav overflow at 375px', '10:15', '11:00'),
-  pr(4, 'feat: add the field report page', '10:30', '13:30'),
-  pr(5, 'chore: add a favicon', '12:30', '14:45'),
+  pr(1, 'feat: build the About Me page', '2026-10-30', '14:24', '14:30', '14:34'),
+  pr(2, 'feat: render the field report', '2026-10-31', '06:18', '06:24', '06:26'),
+  pr(3, 'feat: render the build log', '2026-10-31', '06:22', '06:27', '06:32'),
+  pr(4, 'ci: add CI and the deploy', '2026-10-31', '06:25', '06:33', '06:43'),
 ];
 
-function pr(number: number, title: string, opened: string, merged: string): MergedPr {
+/** A merged PR. `firstCommit`, `opened` and `merged` are `HH:MM`, UTC, on `day`. */
+export function pr(
+  number: number,
+  title: string,
+  day: string,
+  firstCommit: string,
+  opened: string,
+  merged: string,
+): MergedPr {
   return {
     number,
     title,
@@ -33,7 +39,8 @@ function pr(number: number, title: string, opened: string, merged: string): Merg
     additions: number * 40,
     deletions: number * 3,
     ci: 'passed',
-    openedAt: `2026-10-30T${opened}:00Z`,
-    mergedAt: `2026-10-30T${merged}:00Z`,
+    firstCommitAt: `${day}T${firstCommit}:00Z`,
+    openedAt: `${day}T${opened}:00Z`,
+    mergedAt: `${day}T${merged}:00Z`,
   };
 }
